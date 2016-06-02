@@ -1,0 +1,39 @@
+{
+  "name": "testriot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-syntax-trailing-function-commas": "^6.8.0",
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "babel-preset-es2015-riot": "^1.1.0",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-preset-stage-3": "^6.5.0",
+    "babel-register": "^6.9.0",
+    "del": "^2.2.0",
+    "gulp": "git://github.com/gulpjs/gulp.git#4.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-riot": "^0.5.1",
+    "gulp-uglify": "^1.5.3",
+    "node-sass": "^3.7.0",
+    "rollup": "^0.26.3",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-commonjs": "^2.2.1",
+    "rollup-plugin-includepaths": "^0.1.5",
+    "rollup-plugin-npm": "^1.4.0"
+  },
+  "dependencies": {
+    "riotcontrol": "0.0.3"
+  }
+}
