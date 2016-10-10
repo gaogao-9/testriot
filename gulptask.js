@@ -6,8 +6,8 @@ import gulpConcat         from "gulp-concat"
 import gulpRiot           from "gulp-riot"
 import gulpBabel          from "gulp-babel"
 import gulpUglify         from "gulp-uglify"
-import rollup             from "rollup"
-import rollupNpm          from "rollup-plugin-npm"
+import {rollup}           from "rollup"
+import rollupResolve      from "rollup-plugin-node-resolve"
 import rollupCommonjs     from "rollup-plugin-commonjs"
 import rollupBabel        from "rollup-plugin-babel"
 import rollupIncludePaths from "rollup-plugin-includepaths"
@@ -30,8 +30,8 @@ gulp.task("build:js", gulp.series(
                 parserOptions: {
                     js: {
                         babelrc: false,
-                        presets: ["es2015-riot", "stage-3"],
-                        plugins: ["add-module-exports", "syntax-trailing-function-commas"],
+                        presets: ["es2015-riot", ["latest-node6", { "es2015": false }]],
+                        plugins: ["add-module-exports", "transform-runtime"],
                     },
                 },
             }))
@@ -46,18 +46,19 @@ gulp.task("build:js", gulp.series(
             .pipe(gulp.dest("temp")),
     ),
     async ()=> {
-        const bundle = await rollup.rollup({
+        const bundle = await rollup({
             entry: "temp/index.js",
             plugins: [
                 rollupIncludePaths({
                     include: {},
                     paths: ["temp/babel"],
                 }),
-                rollupNpm({ jsnext: true }),
+                rollupResolve({ jsnext: true }),
                 rollupCommonjs(),
                 rollupBabel({
                     babelrc: false,
-                    presets: ["es2015-rollup"],
+                    presets: [["es2015", { "modules": false }]],
+                    plugins: ["external-helpers"],
                 }),
             ],
         });
@@ -78,13 +79,12 @@ gulp.task("build:js", gulp.series(
         .pipe(gulpConcat({ path: "index.js" }))
         .pipe(gulp.dest("dist")),
 ));
-
-gulp.task("default", gulp.series(
+gulp.task("build", gulp.series(
     gulpClean(["temp", "dist"]),
     gulp.parallel(
-        gulp.task("build:js"),
-        gulp.task("build:html"),
-    ),
+	    gulp.task("build:js"),
+	    gulp.task("build:html"),
+	),
     gulpClean(["temp"]),
 ));
 
